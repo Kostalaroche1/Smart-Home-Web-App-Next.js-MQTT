@@ -25,20 +25,22 @@ ESP32-CAM: executes commands
 
 ## Getting Started
 
+
 ### 1. Clone the repo
 ```bash
 git clone https://github.com/yourusername/nextjs-smart-home.git
+cd nextjs-smart-home
+npm install
 
 
-
-##2. Environment Variables (.env.local)
+###2. Environment Variables (.env.local)
 JWT_SECRET=your_jwt_secret
 MQTT_URL=mqtts://your-cluster.s1.eu.hivemq.cloud:8883
 MQTT_USER=your_username
 MQTT_PASS=your_password
-#3. Run locally
+###3. Run locally
 npm run dev
-##4. Deploy
+###4. Deploy
 
 Push to GitHub → connect to Vercel
 
