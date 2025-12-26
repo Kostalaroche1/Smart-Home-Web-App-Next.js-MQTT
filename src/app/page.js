@@ -42,6 +42,27 @@ import { useState } from "react";
 export default function Home() {
   const [message, setMessage] = useState("");
 
+  // const toggle = async (light, state) => {
+  //   try {
+  //     const res = await fetch("/api/light", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ light, state }),
+  //     });
+
+  //     const data = await res.json();
+  //     if (res.ok && data.success) {
+  //       setMessage(`Light ${light} turned ${state}`);
+  //     } else {
+  //       setMessage(`Failed to turn light ${light}: ${data.error || "Unknown error"}`);
+  //     }
+  //   } catch (err) {
+  //     setMessage(`Error: ${err.message}`);
+  //   }
+
+  //   // Clear message after 3 seconds
+  //   setTimeout(() => setMessage(""), 3000);
+  // };
   const toggle = async (light, state) => {
     try {
       const res = await fetch("/api/light", {
@@ -50,18 +71,23 @@ export default function Home() {
         body: JSON.stringify({ light, state }),
       });
 
-      const data = await res.json();
+      let data;
+      try {
+        data = await res.json();
+      } catch {
+        data = { error: "Invalid JSON response" };
+      }
+
       if (res.ok && data.success) {
         setMessage(`Light ${light} turned ${state}`);
       } else {
-        setMessage(`Failed to turn light ${light}: ${data.error || "Unknown error"}`);
+        setMessage(`Failed: ${data.error}`);
       }
     } catch (err) {
-      setMessage(`Error: ${err.message}`);
+      setMessage(`Network error: ${err.message}`);
     }
 
-    // Clear message after 3 seconds
-    setTimeout(() => setMessage(""), 3000);
+    setTimeout(() => setMessage(""), 5000);
   };
 
   return (
